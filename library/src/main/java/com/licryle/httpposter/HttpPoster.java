@@ -138,7 +138,7 @@ public class HttpPoster extends AsyncTask<HttpConfiguration, Integer,
 
   @Override
   protected void onPostExecute(Long lResult) {
-    if (lResult == SUCCESS) {
+    if (lResult == SUCCESS || lResult == FAILURE_RESPONSE) {
       _dispatchOnSuccess(_sResponse);
     } else {
       _dispatchOnFailure(lResult);
@@ -177,12 +177,15 @@ public class HttpPoster extends AsyncTask<HttpConfiguration, Integer,
     mBuilder.setMode(HttpMultipartMode.BROWSER_COMPATIBLE);
     mBuilder.setBoundary(mConf.getHTTPBoundary());
 
+    int iFileNb = 0;
     Iterator mFiles = mConf.getFiles().iterator();
     while (mFiles.hasNext()) {
       final File mFile = new File((String) mFiles.next());
 
-      mBuilder.addBinaryBody("files", mFile, ContentType.DEFAULT_BINARY,
-          mFile.getName());
+      mBuilder.addBinaryBody("file_" + iFileNb, mFile,
+          ContentType.DEFAULT_BINARY, mFile.getName());
+
+      iFileNb++;
     }
 
     Iterator mArgs = mConf.getArgs().entrySet().iterator();
@@ -232,7 +235,13 @@ public class HttpPoster extends AsyncTask<HttpConfiguration, Integer,
         mConn.getOutputStream().close();
 
         _iResponseCode = mConn.getResponseCode();
-        return _getContent(mConn.getInputStream());
+
+        try {
+          _getContent(mConn.getInputStream());
+          return SUCCESS;
+        } catch (IOException e) {
+          return FAILURE_RESPONSE;
+        }
       } catch (Exception e) {
         Log.d("HTTPParser", e.getMessage() + e.getStackTrace().toString());
 
@@ -247,22 +256,16 @@ public class HttpPoster extends AsyncTask<HttpConfiguration, Integer,
     }
   }
 
-  protected long _getContent(InputStream response) {
+  protected void _getContent(InputStream response) throws IOException {
     BufferedReader mRd = new BufferedReader(new InputStreamReader(response));
     String sBody = "";
     String sContent = "";
 
-    try {
-      while ((sBody = mRd.readLine()) != null)
-      {
-        sContent += sBody + "\n";
-      }
-    } catch (IOException e) {
-      return FAILURE_RESPONSE;
+    while ((sBody = mRd.readLine()) != null)
+    {
+      sContent += sBody + "\n";
     }
 
     _sResponse = sContent;
-
-    return SUCCESS;
   }
 }
