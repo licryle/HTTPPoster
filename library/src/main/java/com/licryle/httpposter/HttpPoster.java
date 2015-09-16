@@ -243,7 +243,8 @@ public class HttpPoster extends AsyncTask<HttpConfiguration, Integer,
           return FAILURE_RESPONSE;
         }
       } catch (Exception e) {
-        Log.d("HTTPParser", e.getMessage() + e.getStackTrace().toString());
+        Log.d("HTTPParser", e.getMessage());
+        e.printStackTrace();
 
         return FAILURE_TRANSFER;
       } finally {
