@@ -6,9 +6,9 @@ This code is an merge of (this Stack Overflow post)[http://stackoverflow.com/a/1
 It is also updated to the newest Android API, as HttpPost and HttpClient classes are deprecated in favor of HttpURLConnection.
 
 This tiny library is composed of 3 classes:
-- (HttpListener)[https://github.com/licryle/HTTPPoster/blob/master/library/src/main/java/com/licryle/httpposter/HttpListener.java] - An interface you need to implement to listen for callbacks.
-- (HttpConfiguration)[https://github.com/licryle/HTTPPoster/blob/master/library/src/main/java/com/licryle/httpposter/HttpConfiguration.java] - A helper class holding the configuration &amp; content of the HTTP POST Request to execute. 
-- (HttpPoster)[https://github.com/licryle/HTTPPoster/blob/master/library/src/main/java/com/licryle/httpposter/HttpPoster.java] - The main class - the ASyncTask that will execute the POST requets based on the given (HttpConfiguration)[https://github.com/licryle/HTTPPoster/blob/master/library/src/main/java/com/licryle/httpposter/HttpConfiguration.java], sending back signals through the (HttpListener)[https://github.com/licryle/HTTPPoster/blob/master/library/src/main/java/com/licryle/httpposter/HttpListener.java].
+- [HttpListener](https://github.com/licryle/HTTPPoster/blob/master/library/src/main/java/com/licryle/httpposter/HttpListener.java) - An interface you need to implement to listen for callbacks.
+- [HttpConfiguration](https://github.com/licryle/HTTPPoster/blob/master/library/src/main/java/com/licryle/httpposter/HttpConfiguration.java) - A helper class holding the configuration &amp; content of the HTTP POST Request to execute. 
+- [HttpPoster](https://github.com/licryle/HTTPPoster/blob/master/library/src/main/java/com/licryle/httpposter/HttpPoster.java) - The main class - the ASyncTask that will execute the POST requets based on the given [HttpConfiguration](https://github.com/licryle/HTTPPoster/blob/master/library/src/main/java/com/licryle/httpposter/HttpConfiguration.java), sending back signals through the [HttpListener](https://github.com/licryle/HTTPPoster/blob/master/library/src/main/java/com/licryle/httpposter/HttpListener.java).
 
 # How to use?
 ## Android Studio Setup
