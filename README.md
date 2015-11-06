@@ -1,6 +1,10 @@
 # HTTPPoster
 A little library to easily HTTP POST variables &amp; files in Android.
 
+This code is an merge of http://stackoverflow.com/a/19188010 and http://www.xyzws.com/javafaq/how-to-use-httpurlconnection-post-data-to-web-server/139} put in a nice AsyncTask, with configuration and a listener for all events.
+
+It is also updated to the newest Android API, as HttpPost and HttpClient classes are deprecated in favor of HttpURLConnection.
+
 # How to use?
 ## Android Studio Setup
 In your Android Studio project, create a folder called libs, for example: ./AndroidStudioProject/MyProject/libs
