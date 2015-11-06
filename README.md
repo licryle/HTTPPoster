@@ -11,7 +11,7 @@ In your Android Studio project, create a folder called libs, for example: ./Andr
 
 Download the repository files and unpack either:
 * At the root of ./AndroidStudioProjects/ then create a symbolic link from ./AndroidStudioProject/MyProject/libs/HttpPoster to ./AndroidStudioProject/HttpPoster/library
-* In the directory "library" into the ./AndroidStudioProject/MyProject/libs/ directory and rename "library" folder to "HttpPost"
+* The directory "library" into the ./AndroidStudioProject/MyProject/libs/ directory and rename the "library" folder to "HttpPost"
 
 In your build.gradle Module file, add the dependency
 
