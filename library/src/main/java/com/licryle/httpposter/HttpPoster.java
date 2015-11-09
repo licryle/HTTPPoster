@@ -199,6 +199,8 @@ public class HttpPoster extends AsyncTask<HttpConfiguration, Integer,
     protected long _lTotalSize;
     /** Poster object we want to inform progress of. */
     protected HttpPoster _mPoster;
+    /** Progress from 0 to 100 of the transfer. Used to pace progress sending.*/
+    protected int _iProgress;
 
     public _ProgressiveOutputStream(OutputStream proxy, long total,
                                     HttpPoster mPoster) {
@@ -206,13 +208,15 @@ public class HttpPoster extends AsyncTask<HttpConfiguration, Integer,
       _lTotalSent = 0;
       _lTotalSize = total;
       _mPoster = mPoster;
+      _iProgress = 0;
     }
 
     /**
      * Override of the write method from the base class so we can track how many
      * bytes we sent in the stream. Once written, dispatches progress using
      * _dispatchOnProgress as an int from 0 to 100 corresponding to the
-     * percentage of data sent.
+     * percentage of data sent, only when the value changes to avoid spamming
+     * progress signals.
      *
      * @param aBytes Full array of bytes to be sent in the stream.
      * @param iStart Starting index in aBytes weere we want to start sending.
@@ -225,8 +229,12 @@ public class HttpPoster extends AsyncTask<HttpConfiguration, Integer,
 
       out.write(aBytes, iStart, iCount);
 
-      _mPoster.publishProgress(
-          (int) ((_lTotalSent / (float) _lTotalSize) * 100));
+      int iOldProgress = _iProgress;
+      _iProgress = (int) ((_lTotalSent / (float) _lTotalSize) * 100);
+
+      if (_iProgress != iOldProgress) {
+        _mPoster.publishProgress(_iProgress);
+      }
     }
   }
 
