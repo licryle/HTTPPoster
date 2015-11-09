@@ -49,7 +49,7 @@ public interface HttpListener {
    *                   #FAILURE_RESPONSE, #FAILURE_MALFORMEDURL or
    *                   #FAILURE_FILE_NOT_FOUND.
    */
-  void onFailure(int iInstance, Long lErrorCode);
+  void onFailure(int iInstance, long lErrorCode);
 
   /**
    * Callback called if the HTTP Post succeeds.
