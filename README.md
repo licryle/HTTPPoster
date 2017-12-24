@@ -15,34 +15,49 @@ This tiny library is composed of 3 classes:
 In your Android Studio project, create a folder called libs, for example: ./AndroidStudioProject/MyProject/libs
 
 Download the repository files and unpack either:
-* At the root of ./AndroidStudioProjects/ then create a symbolic link from ./AndroidStudioProject/MyProject/libs/HttpPoster to ./AndroidStudioProject/HttpPoster/library
-* The directory "library" into the ./AndroidStudioProject/MyProject/libs/ directory and rename the "library" folder to "HttpPost"
+* At the root of ./AndroidStudioProjects/ then create a symbolic link from ./AndroidStudioProject/MyProject/libs/HTTPPoster to ./AndroidStudioProject/HTTPPoster/library
+* The directory "library" into the ./AndroidStudioProject/MyProject/libs/ directory and rename the "library" folder to "HTTPPoster"
 
-In your build.gradle Module file, add the dependency
+
+In your settings.gradle *Project file*, add the following:
+
+```include ':libs:HTTPPoster'```
+
+In your build.gradle *Module file* (usually "app"), add the dependency:
 
 ```
 dependencies {
-   ...
-    compile project(':libs:HTTPPoster')
+    ...
+    implementation project(':libs:HTTPPoster')
 }
 ```
 
 ## Quick usage
 ```
+import java.io.File;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.HashMap;
+
+import com.licryle.httpposter.HttpConfiguration;
+import com.licryle.httpposter.HttpPoster;
+...
 HashMap<String, String> mArgs = new HashMap<>();
 mArgs.put("lat", "40.712784");
 mArgs.put("lon", "-74.005941");
 
 ArrayList<File> aFileList = getMyImageFiles();
 
+URL mEndPoint = new URL("http://www.mysite.com/HttpPostEndPoint");
+
 HttpConfiguration mConf = new HttpConfiguration(
-    "http://www.mysite.com/HttpPostEndPoint",
-    mArgs,
-    aFileList,
-    this, // If this class implements HttpListener
-    null,  // Boundary for Entities - Optional
-    15000  // Timeout in ms for the connection operation
-    10000, // Timeout in ms for the reading operation
+        mEndPoint,
+        mArgs,
+        aFileList,
+        this,  // If this class implements HttpListener
+        null,   // Boundary for Entities - Optional
+        15000,  // Timeout in ms for the connection operation
+        10000   // Timeout in ms for the reading operation
 );
 
 new HttpPoster().execute(mConf);
